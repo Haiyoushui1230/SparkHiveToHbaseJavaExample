@@ -4,10 +4,13 @@ import com.test.utils.HbaseWriter;
 import com.test.utils.IDUtils;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import scala.xml.Null;
+
 import java.util.Iterator;
 
 public class SparkHive2Hbase {
@@ -18,7 +21,13 @@ public class SparkHive2Hbase {
                 .enableHiveSupport()
                 .getOrCreate();
         Dataset<Row> sql = spark.sql("SELECT * FROM psn");
-
+        sql.javaRDD().map(new Function<Row, IDUtils>() {
+            @Override
+            public IDUtils call(Row v1) throws Exception {
+               String  name = v1.getAs("name");
+                return null;
+            }
+        });
         sql.show();
         sql.javaRDD().repartition(3).foreachPartition(new VoidFunction<Iterator<Row>>() {
             @Override
