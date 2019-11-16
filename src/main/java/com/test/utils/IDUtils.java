@@ -127,8 +127,12 @@ public class IDUtils {
         String ss = "https://m.sogou.com/web/searchList.jsp?keyword=%E6%89%8B%E6%9C%BA%E5%85%85%E7%94%B5%E5%99%A8%E5%A4%9A%E5%B0%91%E7%93%A6%E6%98%AF%E5%BF%AB%E5%85%85&wm=3206";
         String md5Start16 = IDUtils.getMd5Value(ss).substring(0,16);
         System.out.println(md5Start16);
+        //十进制，
         byte[] rk = Bytes.toBytes(String.format("%03d_%s", IDUtils.shardId(IDUtils.hash(md5Start16), 100), md5Start16));
         System.out.println(Bytes.toString(rk));
+        //十六进制，一般hbase设置成256*256个分区
+        byte[] rk2 = Bytes.toBytes(String.format("%04x_%s", IDUtils.shardId(IDUtils.hash(md5Start16), 100), md5Start16));
+        System.out.println(Bytes.toString(rk2));
 
     }
 }
