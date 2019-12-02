@@ -129,6 +129,9 @@ public class IDUtils {
         System.out.println(md5Start16);
         //十进制，
         byte[] rk = Bytes.toBytes(String.format("%03d_%s", IDUtils.shardId(IDUtils.hash(md5Start16), 100), md5Start16));
+        byte[] rk3 = Bytes.toBytes(String.format("%03d_%s_%s", IDUtils.shardId(IDUtils.hash(md5Start16), 100),"20191123", md5Start16));
+        System.out.println(Bytes.toString(rk3));
+        System.out.println(IDUtils.shardId(IDUtils.hash(md5Start16), 100));//分区
         System.out.println(Bytes.toString(rk));
         //十六进制，一般hbase设置成256*256个分区
         byte[] rk2 = Bytes.toBytes(String.format("%04x_%s", IDUtils.shardId(IDUtils.hash(md5Start16), 100), md5Start16));
